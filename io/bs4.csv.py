@@ -7,8 +7,6 @@ headers = {
 }
 res = requests.get(url, headers)
 soup = BeautifulSoup(res.text, 'html.parser')
-#print(soup)
-
 div1 = soup.find_all("div", attrs={"class":"right fl"})
 tab1 = div1[0].find_all("table")
 trs = tab1[0].find_all("tr")
@@ -26,12 +24,12 @@ for i in trs:
         b = tds[0].find("b")
         table_names[b.text] = []
         table_name = b.text
-
-for k in table_names:
-    print(k)
-    lst = table_names[k]
-    for i in lst:
-        print(i)
-    print("")
+with open("商品价格.csv",'w', newline = '') as f: 
+    writer = csv.writer(f) 
+    for k in table_names:
+        writer.writerow(k)
+        lst = table_names[k]
+        for i in lst:
+            writer.writerow(i)
 
 
